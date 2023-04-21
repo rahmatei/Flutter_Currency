@@ -212,6 +212,7 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         getResponseService();
                         _ShowSnackBar(context);
+                        //_showDialog(context);
                         time =
                             "${DateTime.now().hour.toString()}:${DateTime.now().minute.toString()}";
                       },
@@ -242,12 +243,40 @@ class _HomePageState extends State<HomePage> {
   void _ShowSnackBar(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: Colors.green,
+      elevation: 4.0, // سایه ملایم
+      shape: RoundedRectangleBorder(
+          // گرد کردن قاب snackbar
+          borderRadius: BorderRadius.circular(10)),
       content: Text(
         "اطلاعات بروزرسانی گردید.",
-        style: Theme.of(context).textTheme.displayLarge,
+        style: Theme.of(context).textTheme.displayLarge!.copyWith(
+              // کپی کردن و اضافه کردن خصوصیت های جدید
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
       ),
     ));
   }
+}
+
+void _showDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("پیام"),
+        content: Text("اطلاعات بروزرسانی گردید."),
+        actions: [
+          TextButton(
+            child: Text("تأیید"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
 
 class ItemList extends StatefulWidget {
